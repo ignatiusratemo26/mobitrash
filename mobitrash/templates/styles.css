@@ -1,0 +1,107 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #4B0082;
+    color: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.contact-btn {
+    background-color: #D8BFD8;
+    color: #4B0082;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.header {
+    text-align: left;
+    margin-top: 50px;
+}
+
+.header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.signup {
+    display: flex;
+    align-items: center;
+}
+
+.signup input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.signup-btn {
+    background-color: #32CD32;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.customers {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.icon {
+    background-color: #D8BFD8;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.customers p {
+    font-size: 1em;
+    margin: 0;
+}
+
+.customers span {
+    display: block;
+    color: #FFD700;
+}
+
+.hero-image {
+    background-color: #FF69B4;
+    color: #4B0082;
+    text-align: center;
+    padding: 50px;
+    border-radius: 50%;
+    margin: 50px 0;
+}
