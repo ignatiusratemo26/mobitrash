@@ -7,12 +7,14 @@ class PickupRequest(models.Model):
         ('Pending', 'Pending'),
         ('In Progress', 'In Progress'),
         ('Completed', 'Completed'),
+        ('Canceled', 'Canceled'),
     ]
     PAYMENT_STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Completed', 'Completed'),
+        ('Canceled', 'Canceled'),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='pickuprequest', on_delete=models.CASCADE)
     request_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     pickup_date = models.DateTimeField(null=True, blank=True)
