@@ -1,5 +1,5 @@
 from django.db import models
-from pickup.models import CustomUser as User
+from accounts.models import CustomUser as User
 
 # Create your models here.
 class PickupRequest(models.Model):
