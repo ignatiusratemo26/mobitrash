@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser as User
+from django.utils import timezone
 
 # Create your models here.
 class PickupRequest(models.Model):
@@ -14,17 +15,17 @@ class PickupRequest(models.Model):
         ('Completed', 'Completed'),
         ('Canceled', 'Canceled'),
     ]
-    user = models.ForeignKey(User, related_name='pickuprequest', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='pickup_requests', on_delete=models.CASCADE)
     request_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
-    pickup_date = models.DateTimeField(null=True, blank=True)
+    pickup_date = models.DateTimeField(default=timezone.now)
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Weight in kg
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='Pending')
     amount_due = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def calculate_amount_due(self):
-        # Assume a rate per kg, e.g., $10 per kg
-        rate_per_kg = 10
+        # Assume a rate per kg, e.g., Ksh.30 per kg
+        rate_per_kg = 30
         if self.weight:
             self.amount_due = self.weight * rate_per_kg
         else:

@@ -1,7 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from accounts import views as account_views
 
-urlpatterns = [
+router = routers.DefaultRouter()
+
+urlpatterns = router.urls
+
+urlpatterns += [
     path('admin/', admin.site.urls),
-    path('pickup/', include('pickup.api.urls')),
+    path('accounts-api/', include('accounts.urls')),
+    path('pickup-api/', include('pickup.urls')),
 ]
