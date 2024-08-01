@@ -2,6 +2,7 @@
 import { Grid, GridItem, Show } from '@chakra-ui/react'
 import NavBar from './components/NavBar';
 import GameGrid from './components/GameGrid';
+import PickupTable from './components/PickupTable';
 
 
 function App() {
@@ -18,8 +19,10 @@ function App() {
         <GridItem area='aside'>Aside</GridItem>
       </Show>
       <GridItem area='main' >
-        <GameGrid />
+        {/* <GameGrid /> */}
+        <PickupTable />
       </GridItem>
+       
     </Grid>
     
     </>
