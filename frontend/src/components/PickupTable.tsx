@@ -2,9 +2,13 @@ import React from 'react'
 import { Table,Thead,Tbody,Tfoot,Tr,Th,Td,TableCaption,TableContainer,} from '@chakra-ui/react'
 import apiClient from '../services/api-client'
 import { CanceledError } from "axios"
+import useRequests from '../hooks/useRequests'
+
 
 const PickupTable = () => {
-  return (
+     const { requests, error } = useRequests();
+
+    return (
 
     <TableContainer>
         <Table variant='striped' colorScheme='teal' size='sm'>
