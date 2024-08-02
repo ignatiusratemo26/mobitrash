@@ -1,15 +1,23 @@
-import { HStack, Image, Text } from '@chakra-ui/react'
+import { HStack, Image, Text, Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react'
 import logo from '../assets/react.svg'
+import { Box, Flex, Input, Heading } from '@chakra-ui/react';
 import ColorModeSwitch from './ColorModeSwitch';
 
 const NavBar = () =>{
     return(
-        <HStack>
+        <Box as="header" bg="blue.500" p={3}>
+        <Flex justify="space-between" align="center">
             <Image src={logo} boxSize='60px'/>
             <Text>Navbar</Text>
-
+            <Input placeholder="Search..." width="300px" />
             <ColorModeSwitch />
-        </HStack>
+            <AvatarGroup spacing='1rem'>
+                <Avatar bg='grey.500' name='Iggy Ratemo' />
+                <Avatar bg='teal.500' />
+            </AvatarGroup>
+        </Flex>
+        </Box>
+
     )
 }
 export default NavBar;
