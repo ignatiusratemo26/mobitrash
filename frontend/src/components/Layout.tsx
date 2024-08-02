@@ -1,44 +1,24 @@
 import React from 'react';
-import { Box, Flex, Input, Heading } from '@chakra-ui/react';
+import { Box, Flex, useColorModeValue } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-
+import NavBar from './NavBar';
+import NavMenu from './NavMenu';
 const Layout: React.FC = () => {
+  const navBg = useColorModeValue('gray.200', 'gray.700');
+  const mainBg = useColorModeValue('gray.50', 'gray.800');
+
   return (
     <Flex direction="column" height="100vh">
-      <Box as="header" bg="teal.500" p={4}>
-        <Flex justify="space-between" align="center">
-          <Heading color="white">My App</Heading>
-          <Input placeholder="Search..." width="300px" />
-        </Flex>
-      </Box>
+      <NavBar />
       <Flex flex="1">
-        <Box as="nav" width="250px" bg="gray.200" p={4}>
+        <Box as="nav" width="250px" bg={navBg} p={4}>
           <NavMenu />
         </Box>
-        <Box as="main" flex="1" p={4} bg="gray.50">
+        <Box as="main" flex="1" p={4} bg={mainBg}>
           <Outlet />
         </Box>
       </Flex>
     </Flex>
-  );
-};
-
-const NavMenu: React.FC = () => {
-  return (
-    <Box>
-      <NavItem to="/">Home</NavItem>
-      <NavItem to="/page1">Pickup Requests</NavItem>
-      <NavItem to="/page2">Payments</NavItem>
-      <NavItem to="/page3">Help & Support</NavItem>
-    </Box>
-  );
-};
-
-const NavItem: React.FC<{ to: string }> = ({ to, children }) => {
-  return (
-    <Box as="a" href={to} display="block" p={2} my={2} bg="white" rounded="md" shadow="md">
-      {children}
-    </Box>
   );
 };
 

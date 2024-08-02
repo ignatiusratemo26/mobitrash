@@ -10,8 +10,8 @@ const PickupTable = () => {
 
     return (
 
-    <TableContainer>
-        <Table variant='striped' colorScheme='teal' size='sm'>
+    <TableContainer maxHeight={'55vh'} overflowY={'auto'}>
+        <Table variant='striped' colorScheme='blue' size='sm'>
             <TableCaption>A summary of your recent pickup requests</TableCaption>
             <Thead>
                 
@@ -26,7 +26,6 @@ const PickupTable = () => {
                     <Th isNumeric>Cost</Th>
                 
             </Tr>
-
             </Thead>
             <Tbody>
             <Tr>
@@ -35,6 +34,103 @@ const PickupTable = () => {
                 <Td>Delete      view</Td>
                 <Td isNumeric>25.4</Td>
             </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+            <Tr>
+                <Td>123#</Td>
+                <Td>DD/MM/YYYY TIME:TIME</Td>
+                <Td>Delete      view</Td>
+                <Td isNumeric>25.4</Td>
+            </Tr>
+
             </Tbody>
             <Tfoot>
             <Tr>
