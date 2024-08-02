@@ -1,24 +1,62 @@
 import React from 'react';
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, useColorModeValue, Icon, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
+import { FaHome, FaTruck, FaDollarSign, FaQuestionCircle, FaBars } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
-const NavItem: React.FC<{ to: string; children: React.ReactNode }> = ({ to, children }) => {
+const NavItem: React.FC<{ to: string; icon: any; children: React.ReactNode }> = ({ to, icon, children }) => {
   const itemBg = useColorModeValue('white', 'gray.600');
   const itemColor = useColorModeValue('black', 'white');
 
+  
+
   return (
-    <Box as="a" href={to} display="block" p={2} my={2} bg={itemBg} color={itemColor} rounded="md" shadow="md">
+    <Box as={Link} to={to} display="flex" alignItems="center" p={2} my={2} bg={itemBg} color={itemColor} rounded="md" shadow="md">
+      <Icon as={icon} mr={2} />
       {children}
     </Box>
   );
 };
 
 const NavMenu: React.FC = () => {
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+
+  const menuItems = (
+    <>
+      <NavItem to="/" icon={FaHome}>Home</NavItem>
+      <NavItem to="/pickup_requests" icon={FaTruck}>Pickup Requests</NavItem>
+      <NavItem to="/payments" icon={FaDollarSign}>Payments</NavItem>
+      <NavItem to="/help_support" icon={FaQuestionCircle}>Help & Support</NavItem>
+    </>
+  );
+
+
   return (
     <Box>
-      <NavItem to="/">Home</NavItem>
-      <NavItem to="/pickup_requests">Pickup Requests</NavItem>
-      <NavItem to="/payments">Payments</NavItem>
-      <NavItem to="/help_support">Help & Support</NavItem>
+      {isMobile ? (
+        <Menu>
+          <MenuButton as={Button} rightIcon={<FaBars />} />
+          <MenuList>
+            <MenuItem as={Link} to="/">
+              <Icon as={FaHome} mr={2} />
+              Home
+            </MenuItem>
+            <MenuItem as={Link} to="/pickup_requests">
+              <Icon as={FaTruck} mr={2} />
+              Pickup Requests
+            </MenuItem>
+            <MenuItem as={Link} to="/payments">
+              <Icon as={FaDollarSign} mr={2} />
+              Payments
+            </MenuItem>
+            <MenuItem as={Link} to="/help_support">
+              <Icon as={FaQuestionCircle} mr={2} />
+              Help & Support
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        menuItems
+      )}
     </Box>
   );
 };

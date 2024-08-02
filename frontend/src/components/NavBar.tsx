@@ -2,6 +2,7 @@ import { HStack, Image, Text, Avatar, AvatarBadge, AvatarGroup } from '@chakra-u
 import logo from '../assets/react.svg'
 import { Box, Flex, Input, Heading } from '@chakra-ui/react';
 import ColorModeSwitch from './ColorModeSwitch';
+import { color } from 'framer-motion';
 
 const NavBar = () =>{
     return(
@@ -9,7 +10,7 @@ const NavBar = () =>{
         <Flex justify="space-between" align="center">
             <Image src={logo} boxSize='60px'/>
             <Text>Navbar</Text>
-            <Input placeholder="Search..." width="300px" />
+            <Input placeholder="Search..."  width="300px" />
             <ColorModeSwitch />
             <AvatarGroup spacing='1rem'>
                 <Avatar bg='grey.500' name='Iggy Ratemo' />
