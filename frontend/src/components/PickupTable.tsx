@@ -14,12 +14,19 @@ const PickupTable = () => {
         <Table variant='striped' colorScheme='teal' size='sm'>
             <TableCaption>A summary of your recent pickup requests</TableCaption>
             <Thead>
-            <Tr>
-                <Th>Pickup ID</Th>
-                <Th>Date</Th>
-                <Th>Actions</Th>
-                <Th isNumeric>Cost</Th>
+                
+            {/* {requests.map((request)=>{
+                key={request.id}
+
+})} */}
+            <Tr>                
+                    <Th >Pickup ID</Th>
+                    <Th>Date</Th>
+                    <Th>Actions</Th>
+                    <Th isNumeric>Cost</Th>
+                
             </Tr>
+
             </Thead>
             <Tbody>
             <Tr>

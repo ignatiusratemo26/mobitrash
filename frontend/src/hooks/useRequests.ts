@@ -3,9 +3,9 @@ import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 interface Request {
     id: number;
-    name: string;
-    date: string;
-    amount: string;
+    user_email: string;
+    request_date: string;
+    amount_due: number;
 
 }
 interface FetchRequestsResponse {
@@ -20,7 +20,7 @@ const useRequests = () => {
 
     useEffect(() =>{
         const controller = new AbortController();
-        apiClient.get<FetchRequestsResponse>('/pickup-requests', { signal: controller.signal })
+        apiClient.get<FetchRequestsResponse>('/pickup-api/admin/pickup-list', { signal: controller.signal })
             .then(response => setRequests(response.data.results))
             .catch(error => {
                 if (error instanceof CanceledError) return;
