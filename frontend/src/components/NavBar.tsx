@@ -9,7 +9,6 @@ const NavBar = () =>{
         <Box as="header" bg="blue.500" p={3}>
         <Flex justify="space-between" align="center">
             <Image src={logo} boxSize='60px'/>
-            <Text>Navbar</Text>
             <Input placeholder="Search..."  width="300px" />
             <ColorModeSwitch />
             <AvatarGroup spacing='1rem'>

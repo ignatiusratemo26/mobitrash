@@ -10,7 +10,7 @@ const PickupTable = () => {
 
     return (
 
-    <TableContainer maxHeight={'55vh'} overflowY={'auto'}>
+    <TableContainer maxHeight={'40vh'} overflowY={'auto'}>
         <Table variant='striped' colorScheme='blue' size='sm'>
             <TableCaption>A summary of your recent pickup requests</TableCaption>
             <Thead>
