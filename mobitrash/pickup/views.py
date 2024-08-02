@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
-
+from accounts.models import CustomUser as User   
 
 class AdminPickupRequestViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated , permissions.IsAdminUser)
@@ -64,9 +64,15 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
     filterset_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     
     
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
+    def create(self, request, *args, **kwargs):
+        user_id = self.kwargs.get('user_id')
+        user = User.objects.get(id=user_id)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=user)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
     
