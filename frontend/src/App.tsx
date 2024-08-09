@@ -1,17 +1,27 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import HelpSupport from './pages/HelpSupport';
 import Payments from './pages/Payments';
 import PickupRequests from './pages/PickupRequests';
+import useAccounts from './hooks/useAccounts';
+import { useState } from 'react';
+import useAuth from './hooks/useAuth';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
-const App: React.FC = () => {
+function App () {
+  const { currentUser } = useAuth();
+  const [registrationToggle, setRegistrationToggle] = useState(false);
+
   return (
     <Router>
       <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Home />} />          
+          <Route path='home' element={<Home />} />
           <Route path="pickup_requests" element={<PickupRequests />} />
           <Route path="payments" element={<Payments />} />
           <Route path="help_support" element={<HelpSupport />} />
@@ -22,39 +32,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-
-
-// import { RequestTable } from './components/RequestTable'
-// import { Grid, GridItem, Show } from '@chakra-ui/react'
-// import NavBar from './components/NavBar';
-// import GameGrid from './components/GameGrid';
-// import PickupTable from './components/PickupTable';
-
-
-// function App() {
-//   return (
-//     <>
-//     <Grid templateAreas={{
-//       base: `"nav" "main"`,
-//       lg: `"nav nav" "aside main"`,
-//     }}>
-//       <GridItem area='nav' bg='green'>
-//         <NavBar />
-//       </GridItem>
-//       <Show above='lg'>
-//         <GridItem area='aside'>Aside</GridItem>
-//       </Show>
-//       <GridItem area='main' >
-//         {/* <GameGrid /> */}
-//         <PickupTable />
-//       </GridItem>
-       
-//     </Grid>
-    
-//     </>
-//   );
-// }
-
-// export default App
