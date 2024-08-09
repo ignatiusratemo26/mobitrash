@@ -12,7 +12,7 @@ from rest_framework.pagination import PageNumberPagination
 from accounts.models import CustomUser as User   
 
 class AdminPickupRequestViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated , permissions.IsAdminUser)
+    permission_classes = (permissions.IsAuthenticated , permissions.IsAdminUser, permissions.AllowAny)
     serializer_class = PickupRequestSerializer
     queryset = PickupRequest.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]

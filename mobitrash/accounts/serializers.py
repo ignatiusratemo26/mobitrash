@@ -2,11 +2,11 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 from pickup.serializers import PickupRequestSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 UserModel = get_user_model()
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    pickup_requests = PickupRequestSerializer(many=True, read_only=True)
     class Meta:
         model= UserModel
         fields = '__all__'
@@ -19,10 +19,19 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             user.save()
             return user
 
-
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        return token
+    
 class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     password = serializers.CharField()
+    
+    class Meta:
+        model = UserModel
+        fields = ('email', 'password')
     
     def check_user(self, clean_data):
         user = authenticate(email=clean_data['email'],
@@ -32,9 +41,10 @@ class UserLoginSerializer(serializers.ModelSerializer):
         return user
 
 class UserSerializer(serializers.ModelSerializer):
+    pickup_requests = PickupRequestSerializer(many=True, read_only=True)
     class Meta:
         model = UserModel
-        fields = 'email', 'address', 'phone_number'
+        fields = 'email', 'address', 'phone_number', 'pickup_requests'
         
         
 class PasswordSerializer(serializers.Serializer):
