@@ -29,14 +29,14 @@ const NavBar = () => {
         
         <Menu>
           <MenuButton> 
-          <AvatarGroup spacing='1rem'>
-              { currentUser ? 
+          <AvatarGroup spacing='1rem '>
+              { currentUser ?
               <Avatar bg='grey.500' name={`${currentUser?.first_name} ${currentUser?.last_name}`} /> : <Avatar bg='teal.500' />  }
             </AvatarGroup>
           </MenuButton>
 
           <MenuList>
-            <MenuItem icon={<FaUser />} onClick={() => navigate('/my_profile')}>
+            <MenuItem icon={<FaUser />} onClick={() => navigate('/profile')}>
                 My Profile
             </MenuItem>            
             <MenuItem icon={<FaCalendar />} onClick={() => navigate('/my_requests')}>
