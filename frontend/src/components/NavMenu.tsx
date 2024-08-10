@@ -23,10 +23,10 @@ const NavMenu: React.FC = () => {
   const menuItems = (
     <>
       <NavItem to="/" icon={FaHome}>Home</NavItem>
-      <NavItem to="/my_profile" icon={FaUser}>My Profile</NavItem>
-      <NavItem to="/pickup_requests" icon={FaTruck}>Pickup Requests</NavItem>
+      <NavItem to="/profile" icon={FaUser}>My Profile</NavItem>
+      <NavItem to="/pickup-requests" icon={FaTruck}>Pickup Requests</NavItem>
       <NavItem to="/payments" icon={FaDollarSign}>Payments</NavItem>
-      <NavItem to="/help_support" icon={FaQuestionCircle}>Help & Support</NavItem>
+      <NavItem to="/support" icon={FaQuestionCircle}>Help & Support</NavItem>
     </>
   );
 
@@ -41,11 +41,11 @@ const NavMenu: React.FC = () => {
               <Icon as={FaHome} mr={2} />
               Home
             </MenuItem>
-            <MenuItem as={Link} to="/my_profile">
+            <MenuItem as={Link} to="/profile">
               <Icon as={FaUser} mr={2} />
               My Profile
             </MenuItem>
-            <MenuItem as={Link} to="/pickup_requests">
+            <MenuItem as={Link} to="/pickup-requests">
               <Icon as={FaTruck} mr={2} />
               Pickup Requests
             </MenuItem>
@@ -53,7 +53,7 @@ const NavMenu: React.FC = () => {
               <Icon as={FaDollarSign} mr={2} />
               Payments
             </MenuItem>
-            <MenuItem as={Link} to="/help_support">
+            <MenuItem as={Link} to="/support">
               <Icon as={FaQuestionCircle} mr={2} />
               Help & Support
             </MenuItem>
