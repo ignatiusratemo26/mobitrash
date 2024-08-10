@@ -1,9 +1,9 @@
-import { Box, Flex, Image, Input, AvatarGroup, Avatar, Text, Button, Menu, MenuList, MenuItem, MenuButton, Icon, useColorMode } from '@chakra-ui/react';
+import { Box, Flex, Image, Input, AvatarGroup, Avatar, Text, Button, Menu, MenuList, MenuItem, MenuButton, Icon, useColorMode, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/react.svg';
 import ColorModeSwitch from './ColorModeSwitch';
 import useAuth from '../hooks/useAuth';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, SearchIcon } from '@chakra-ui/icons';
 import { FaCalendar, FaMoon, FaSignOutAlt, FaSun, FaUser } from 'react-icons/fa';
 
 const NavBar = () => {
@@ -23,10 +23,18 @@ const NavBar = () => {
     <Box as="header" bg="blue.500" p={3}>
       <Flex justify="space-between" align="center">
         <Image src={logo} boxSize='60px' />
-        
-        <Input placeholder="Search..." width="300px" />
-        
-        
+
+        <InputGroup width="300px">
+          <InputLeftElement
+            pointerEvents="none"
+            children={<SearchIcon color="gray.700" />}
+          />
+          <Input 
+            placeholder="Search..." 
+            borderColor="gray.700" 
+            _placeholder={{ color: 'gray.700' }}
+          />
+        </InputGroup>
         <Menu>
           <MenuButton> 
           <AvatarGroup spacing='1rem '>
