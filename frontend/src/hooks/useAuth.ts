@@ -13,7 +13,6 @@ const useAuth = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Fetched user data:', response.data[0]?.email);
         setCurrentUser(response.data[0]);
       } catch (error: any) {
           if (error.response?.status === 401) {

@@ -29,7 +29,6 @@ const useRequests = () => {
             console.log('No token found');
             return;
         }
-        console.log('Retrieved token:', token);
         api.get<FetchRequestsResponse>('/pickup-api/admin/pickup-list/', {
             headers: { Authorization: `Bearer ${token}` }, 
             signal: controller.signal })

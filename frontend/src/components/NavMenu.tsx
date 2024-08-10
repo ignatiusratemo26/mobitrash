@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, useColorModeValue, Icon, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
-import { FaHome, FaTruck, FaDollarSign, FaQuestionCircle, FaBars } from 'react-icons/fa';
+import { FaHome, FaTruck, FaDollarSign, FaQuestionCircle, FaBars, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const NavItem: React.FC<{ to: string; icon: any; children: React.ReactNode }> = ({ to, icon, children }) => {
@@ -23,6 +23,7 @@ const NavMenu: React.FC = () => {
   const menuItems = (
     <>
       <NavItem to="/" icon={FaHome}>Home</NavItem>
+      <NavItem to="/my_profile" icon={FaUser}>My Profile</NavItem>
       <NavItem to="/pickup_requests" icon={FaTruck}>Pickup Requests</NavItem>
       <NavItem to="/payments" icon={FaDollarSign}>Payments</NavItem>
       <NavItem to="/help_support" icon={FaQuestionCircle}>Help & Support</NavItem>
@@ -39,6 +40,10 @@ const NavMenu: React.FC = () => {
             <MenuItem as={Link} to="/">
               <Icon as={FaHome} mr={2} />
               Home
+            </MenuItem>
+            <MenuItem as={Link} to="/my_profile">
+              <Icon as={FaUser} mr={2} />
+              My Profile
             </MenuItem>
             <MenuItem as={Link} to="/pickup_requests">
               <Icon as={FaTruck} mr={2} />

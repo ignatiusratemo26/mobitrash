@@ -9,6 +9,7 @@ import { useState } from 'react';
 import useAuth from './hooks/useAuth';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import UserProfile from './pages/UserProfile';
 
 function App () {
   const { currentUser } = useAuth();
@@ -27,6 +28,7 @@ function App () {
           <Route path="pickup_requests" element={<PickupRequests />} />
           <Route path="payments" element={<Payments />} />
           <Route path="help_support" element={<HelpSupport />} />
+          <Route path='my_profile' element={<UserProfile />} />
         </Route>
 
         {/* Redirect any unknown paths to home */}
