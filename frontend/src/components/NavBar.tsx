@@ -1,12 +1,15 @@
-import { Box, Flex, Image, Input, AvatarGroup, Avatar, Text, Button } from '@chakra-ui/react';
+import { Box, Flex, Image, Input, AvatarGroup, Avatar, Text, Button, Menu, MenuList, MenuItem, MenuButton, Icon, useColorMode } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/react.svg';
 import ColorModeSwitch from './ColorModeSwitch';
 import useAuth from '../hooks/useAuth';
+import { AddIcon } from '@chakra-ui/icons';
+import { FaCalendar, FaMoon, FaSignOutAlt, FaSun, FaUser } from 'react-icons/fa';
 
 const NavBar = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const { colorMode, toggleColorMode } = useColorMode();
   const handleLogout = async () => {
     try {
       await logout();
@@ -20,16 +23,34 @@ const NavBar = () => {
     <Box as="header" bg="blue.500" p={3}>
       <Flex justify="space-between" align="center">
         <Image src={logo} boxSize='60px' />
-        <Text as="h1" fontSize="2xl" fontWeight="bold" color="white">Welcome, {currentUser?.first_name}!</Text>
-        <Input placeholder="Search..." width="300px" />
-        <ColorModeSwitch />
         
-        <AvatarGroup spacing='1rem'>
-          <Avatar bg='grey.500' name={`${currentUser?.first_name} ${currentUser?.last_name}`}  />
-        </AvatarGroup>
-        <Button colorScheme="red" variant="outline" onClick={handleLogout}>
-          Logout
-        </Button>
+        <Input placeholder="Search..." width="300px" />
+        
+        
+        <Menu>
+          <MenuButton> 
+          <AvatarGroup spacing='1rem'>
+              { currentUser ? 
+              <Avatar bg='grey.500' name={`${currentUser?.first_name} ${currentUser?.last_name}`} /> : <Avatar bg='teal.500' />  }
+            </AvatarGroup>
+          </MenuButton>
+
+          <MenuList>
+            <MenuItem icon={<FaUser />} onClick={() => navigate('/my_profile')}>
+                My Profile
+            </MenuItem>            
+            <MenuItem icon={<FaCalendar />} onClick={() => navigate('/my_requests')}>
+              My requests
+            </MenuItem>
+            <MenuItem icon={<Icon as={colorMode === 'light' ? FaMoon : FaSun} />} onClick={toggleColorMode}>
+              {colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
+            </MenuItem>
+            <MenuItem icon={<FaSignOutAlt />} onClick={handleLogout}>
+              Log Out
+            </MenuItem>
+          </MenuList>
+        </Menu>
+
       </Flex>
     </Box>
   );
