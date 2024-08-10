@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 from pickup.serializers import PickupRequestSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 UserModel = get_user_model()
 
@@ -17,7 +18,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                 password=clean_data['password']
             )
             user.save()
-            return user
+            refresh = RefreshToken.for_user(user)
+            return {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                **clean_data
+            }
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -38,7 +44,12 @@ class UserLoginSerializer(serializers.ModelSerializer):
                 password=clean_data['password'])
         if not user:
             raise ValidationError('user not found')
-        return user
+        refresh = RefreshToken.for_user(user)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+
 
 class UserSerializer(serializers.ModelSerializer):
     pickup_requests = PickupRequestSerializer(many=True, read_only=True)

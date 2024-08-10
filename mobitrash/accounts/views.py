@@ -1,6 +1,4 @@
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -15,7 +13,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class UserViewSet(viewsets.ModelViewSet):
     """
     A viewset that provides the standard actions
@@ -23,6 +20,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes=[IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     @action(detail=True, methods=['post', 'put'])
     def set_password(self, request, pk=None):
@@ -50,8 +48,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 
-
-@method_decorator(csrf_exempt, name='dispatch')
 class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request):
@@ -67,17 +63,14 @@ class UserRegister(APIView):
                     **serializer.data
                 }, status=status.HTTP_201_CREATED)
             return Response(status=status.HTTP_400_BAD_REQUEST)
-      
-@method_decorator(csrf_exempt, name='dispatch')
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
     throttle_scope = 'login'
       
-@method_decorator(csrf_exempt, name='dispatch')
 class UserLogin(APIView):
     permission_classes = (permissions.AllowAny,)
-    authentication_classes = (TokenAuthentication,)
-
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -94,7 +87,6 @@ class UserLogin(APIView):
             else:
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     
 class UserLogout(APIView):
     permission_classes = (permissions.IsAuthenticated,)
