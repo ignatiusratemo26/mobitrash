@@ -18,7 +18,7 @@ class PickupRequest(models.Model):
     user = models.ForeignKey(User, related_name='pickup_requests', on_delete=models.CASCADE)
     request_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
-    pickup_date = models.DateTimeField(default=timezone.now)
+    pickup_date = models.DateTimeField(null=True, blank=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Weight in kg
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='Pending')
     amount_due = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

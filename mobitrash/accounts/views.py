@@ -1,15 +1,17 @@
-from django.shortcuts import render
-from django.contrib.auth import get_user_model,login, logout
-from rest_framework.authentication import SessionAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer, PasswordSerializer
+
+from .serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer, PasswordSerializer, MyTokenObtainPairSerializer
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from .models import CustomUser as User
 from .validations import custom_validation
 from rest_framework.permissions import IsAdminUser,IsAuthenticated
 from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -18,6 +20,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes=[IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     @action(detail=True, methods=['post', 'put'])
     def set_password(self, request, pk=None):
@@ -32,7 +35,7 @@ class UserViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False)
-    def recent_users(self, request):
+    def recent_users(self):
         recent_users = User.objects.all().order_by('-last_login')
 
         page = self.paginate_queryset(recent_users)
@@ -45,8 +48,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 
-
-
 class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request):
@@ -55,21 +56,50 @@ class UserRegister(APIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.create(clean_data)
             if user:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                    **serializer.data
+                }, status=status.HTTP_201_CREATED)
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+    throttle_scope = 'login'
+      
 class UserLogin(APIView):
     permission_classes = (permissions.AllowAny,)
-
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            username = serializer.validated_data['username']
+            email = serializer.validated_data['email']
             password = serializer.validated_data['password']
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=email, password=password)
             if user is not None:
-                login(request, user)
-                return Response({'status': 'login successful'}, status=status.HTTP_200_OK)
+                # Generate JWT tokens
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UserLogout(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            # Extract the refresh token from the request
+            refresh_token = request.data.get('refresh_token')
+            if refresh_token:
+                # Create a RefreshToken object to blacklist it
+                token = RefreshToken(refresh_token)
+                token.blacklist()  # Optional: Requires `djangorestframework-simplejwt` blacklist feature
+
+            return Response({'message': 'Logged out successfully'}, status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
