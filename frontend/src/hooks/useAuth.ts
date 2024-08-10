@@ -7,37 +7,46 @@ const useAuth = () => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        try {
-          const response = await axiosInstance.get<User>('http://127.0.0.1:8000/accounts-api/user/', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setCurrentUser(response.data);
-        } catch (error) {
-          // Handle error (e.g., redirect to login)
-          setCurrentUser(null);
+  const fetchUser = async () => {
+    if (token) {
+      try {
+        const response = await api.get<User>('http://127.0.0.1:8000/accounts-api/user/', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log('Retrieved token:', token);
+        setCurrentUser(response.data);
+      } catch (error: any) {
+          if (error.response?.status === 401) {
+            await refreshToken();
+          } 
+          else {
+            setCurrentUser(null);
+            localStorage.removeItem('token');
+            setToken(null);
         }
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     fetchUser();
-  }, []);
+  }, [token]);
   
-
   const login = async (email: string, password: string) => {
     try {
-      const response = await axiosInstance.post('/accounts-api/token/login/', {
+      const response = await api.post('/accounts-api/token/login/', {
         email,
         password,
       });
-      const token = response.data.token; // Adjust this based on your API response
-      localStorage.setItem('token', token);
-      setCurrentUser(null);
+      const { access, refresh } = response.data; // Adjust this based on your API response
+      localStorage.setItem('token', access);
+      setToken(access);
+      // Check if token is saved correctly
+      console.log('Stored token:', localStorage.getItem('token'));
+
+      await fetchUser();
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -50,11 +59,46 @@ const useAuth = () => {
   };
 
   const logout = async () => {
-    await api.post("/accounts-api/logout");
+    try{
+      await api.post("/accounts-api/logout");
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }    
     setCurrentUser(null);
     setToken(null);
+    localStorage.removeItem('token');
   };
+
+  const refreshToken = async () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      try {
+        const response = await api.post('/accounts-api/token/refresh/', {
+          refresh: refreshToken,
+        });
+        const { access } = response.data; // Extract new access token
+        localStorage.setItem('token', access); // Update access token in local storage
+        setToken(access); // Update state with new access token
+
+        // Retry the fetchUser request
+        await fetchUser();
+      } catch (error) {
+        console.error('Token refresh failed:', error);
+        // Handle token refresh failure, e.g., redirect to login
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        setToken(null);
+        setCurrentUser(null);
+      }
+    }
+  };
+
 
   return { token, currentUser, login, register, logout };
 };
 export default useAuth;
+
+
+
+  
+
