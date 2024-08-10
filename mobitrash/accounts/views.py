@@ -12,41 +12,34 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    A viewset that provides the standard actions
-    """
-    queryset = User.objects.all()
+
     serializer_class = UserSerializer
     permission_classes=[IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    def get_queryset(self):
+        # Return only the currently authenticated user's details
+        return User.objects.filter(id=self.request.user.id)
+    
+    def list(self, request, *args, **kwargs):
+        """
+        Override the list method to return only the current user's data without pagination.
+        """
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+    
     @action(detail=True, methods=['post', 'put'])
-    def set_password(self, request, pk=None):
-        user = self.get_object()
+    def set_password(self, request, *args, **kwargs):
+        user = self.request.user
         serializer = PasswordSerializer(data=request.data)
         if serializer.is_valid():
             user.set_password(serializer.validated_data['password'])
             user.save()
             return Response({'status': 'password set'})
         else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=False)
-    def recent_users(self):
-        recent_users = User.objects.all().order_by('-last_login')
-
-        page = self.paginate_queryset(recent_users)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(recent_users, many=True)
-        return Response(serializer.data)
-
-
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)

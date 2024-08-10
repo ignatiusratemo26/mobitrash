@@ -1,7 +1,5 @@
-// src/hooks/useAuth.ts
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import axiosInstance from '../services/axiosInstance';
 import { User } from '../types/User';
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
@@ -10,13 +8,13 @@ const useAuth = () => {
   const fetchUser = async () => {
     if (token) {
       try {
-        const response = await api.get<User>('http://127.0.0.1:8000/accounts-api/user/', {
+        const response = await api.get<User[]>('http://127.0.0.1:8000/accounts-api/user/', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Retrieved token:', token);
-        setCurrentUser(response.data);
+        console.log('Fetched user data:', response.data[0]?.email);
+        setCurrentUser(response.data[0]);
       } catch (error: any) {
           if (error.response?.status === 401) {
             await refreshToken();
@@ -40,11 +38,9 @@ const useAuth = () => {
         email,
         password,
       });
-      const { access, refresh } = response.data; // Adjust this based on your API response
+      const { access } = response.data; // Adjust this based on your API response
       localStorage.setItem('token', access);
       setToken(access);
-      // Check if token is saved correctly
-      console.log('Stored token:', localStorage.getItem('token'));
 
       await fetchUser();
     } catch (error) {

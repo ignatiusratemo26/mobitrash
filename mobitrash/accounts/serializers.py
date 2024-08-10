@@ -52,10 +52,9 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    pickup_requests = PickupRequestSerializer(many=True, read_only=True)
     class Meta:
         model = UserModel
-        fields = 'email', 'address', 'phone_number', 'pickup_requests'
+        fields = ['email', 'address', 'phone_number', 'first_name', 'last_name']
         
         
 class PasswordSerializer(serializers.Serializer):
