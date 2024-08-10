@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { CanceledError } from "axios";
 import api from "../services/api";
-import client from "../services/axiosInstance";
 import useAuth from "./useAuth";
 interface Request {
     id: number;
@@ -30,7 +29,8 @@ const useRequests = () => {
             console.log('No token found');
             return;
         }
-        client.get<FetchRequestsResponse>('/pickup-api/admin/pickup-list/', {
+        console.log('Retrieved token:', token);
+        api.get<FetchRequestsResponse>('/pickup-api/admin/pickup-list/', {
             headers: { Authorization: `Bearer ${token}` }, 
             signal: controller.signal })
             .then(response => {
