@@ -7,6 +7,7 @@ interface Request {
     user_email: string;
     request_date: string;
     amount_due: number;
+    status: string;
 
 }
 interface FetchRequestsResponse {
@@ -29,7 +30,6 @@ const useRequests = () => {
             console.log('No token found');
             return;
         }
-        console.log('Retrieved token:', token);
         api.get<FetchRequestsResponse>('/pickup-api/admin/pickup-list/', {
             headers: { Authorization: `Bearer ${token}` }, 
             signal: controller.signal })
