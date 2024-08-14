@@ -10,6 +10,7 @@ import useAuth from './hooks/useAuth';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import UserProfile from './pages/UserProfile';
+import PickupRequestCard from './components/PickupRequestCard';
 
 function App () {
   const { currentUser } = useAuth();
@@ -20,6 +21,9 @@ function App () {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path="/pickup-requests/:id" element={<PickupRequestCard isOpen={false} onClose={function (): void {
+          throw new Error('Function not implemented.');
+        } } requestId={0} />} />
         
         {/* Protected routes */}
         <Route path="/" element={ currentUser ? <Layout /> : <Navigate to="/home" /> }>
