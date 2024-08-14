@@ -15,6 +15,7 @@ class AdminPickupRequestViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated , permissions.IsAdminUser)
     serializer_class = PickupRequestSerializer
     queryset = PickupRequest.objects.all()
+    
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     
     ordering_fields = ['pickup_date', 'user__email','user__id', 'status', ]
@@ -51,8 +52,6 @@ class AdminPickupRequestViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(pickup_request)
         return Response(serializer.data)
     
-
-    
 class PickupRequestViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated ,IsOwnerOrReadOnly)
     serializer_class = PickupRequestSerializer
@@ -74,9 +73,10 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
     def get_queryset(self):
+        if self.action in ['list_user_pickups', 'retrieve_by_user']:
+            return self.queryset.filter(user=self.request.user)
         return self.queryset.filter(user=self.request.user)
-    
-    
+
     
     def recent_pickups(self, request):
         recent_pickups = PickupRequest.objects.filter(user=self.request.user).order_by('-pickup_date')
@@ -89,10 +89,9 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(recent_pickups, many=True)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'], url_path='user/(?P<user_id>\d+)/pickup-requests', url_name='user_pickups')
+    @action(detail=False, methods=['get'], url_path='pickup-requests', url_name='user_pickups')
     def list_user_pickups(self, request, user_id=None):
-        # You may want to add permissions to ensure the request.user has the right to view the pickups for this user
-        pickups = PickupRequest.objects.filter(user_id=user_id)
+        pickups = PickupRequest.objects.filter(user=request.user)
         
         page = self.paginate_queryset(pickups)
         if page is not None:
@@ -102,12 +101,13 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(pickups, many=True)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'], url_path='user/(?P<user_id>\d+)/pickup-requests/(?P<pk>\d+)', url_name='user_retrieve_pickup_request')
-    def retrieve_by_user(self, request, user_id=None, pk=None):
+    @action(detail=False, methods=['get'], url_path='pickup-requests/(?P<pk>\d+)', url_name='user_retrieve_pickup_request')
+    def retrieve_pickup_request(self, request, user_id=None, pk=None):
         try:
-            pickup_request = PickupRequest.objects.get(pk=pk, user_id=user_id)
+            pickup_request = PickupRequest.objects.get(pk=pk, user=request.user)
         except PickupRequest.DoesNotExist:
             return Response({'detail': 'Not found.'}, status=status.HTTP_404_NOT_FOUND)
         
         serializer = self.get_serializer(pickup_request)
         return Response(serializer.data)
+    
