@@ -21,6 +21,7 @@ const PickupTable = () => {
     setIsModalOpen(false);
     setSelectedRequest(null);
   }
+  
 
   return (
     <>
@@ -39,8 +40,10 @@ const PickupTable = () => {
         <Tbody>
           {requests.map((request) => (
             <Tr key={request.id}>
-              <Td>{request.id}</Td>
-              <Td>{request.request_date}</Td>
+              <Td>#{request.id}</Td>
+              <Td>
+                {new Date(request.request_date).toISOString().slice(0, 10) +' '+ 
+                new Date(request.request_date).toISOString().slice(11, 19) }</Td>
               <Td><Badge
                 variant={request.status === 'Pending' ? 'outline' : 'solid'}
                 colorScheme={request.status === 'Completed' ? 'green' : 'yellow'}>
@@ -56,14 +59,6 @@ const PickupTable = () => {
             </Tr>
           ))}
         </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th></Th>
-            <Th></Th>
-            <Th>TOTAL:</Th>
-            <Th isNumeric>Total ---here</Th>
-          </Tr>
-        </Tfoot>
       </Table>
     </TableContainer>
     { selectedRequest && (<PickupRequestCard isOpen={isModalOpen} onClose={ handleCloseModal } requestId={selectedRequest}  /> )

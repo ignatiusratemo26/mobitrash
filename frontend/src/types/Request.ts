@@ -4,4 +4,5 @@ export interface Request{
     request_date: string;
     amount_due?: number;
     status: string;
+    payment_status: string;
 }
