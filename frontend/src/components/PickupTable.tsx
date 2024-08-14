@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Badge, Button } from '@chakra-ui/react';
 import useRequests from '../hooks/useRequests';
 import { ViewIcon } from '@chakra-ui/icons';
+import useRequestView from '../hooks/useRequestView';
+import PickupRequestCard from './PickupRequestCard';
 
 const PickupTable = () => {
   const { requests, error, isLoading } = useRequests();
   const skeletons = [1];
+  // const handleView = useRequestView();
+
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
+
+  const handleView = (id: number) => {
+    setIsModalOpen(true);
+    setSelectedRequest(id);
+  }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequest(null);
+  }
 
   return (
+    <>
     <TableContainer maxHeight={'40vh'} overflowY={'auto'}>
       <Table variant='striped' colorScheme='blue' size='sm'>
         <TableCaption>A summary of your recent pickup requests</TableCaption>
@@ -32,7 +48,7 @@ const PickupTable = () => {
               </Badge>
               </Td>
               <Td>
-              <Button size="xs" rightIcon={<ViewIcon />} colorScheme='teal' variant='outline' onClick={() => console.log(request.id)}>
+              <Button size="xs" rightIcon={<ViewIcon />} colorScheme='teal' variant='outline' onClick={() => handleView(request.id)}>
                 View
               </Button>
               </Td>
@@ -50,6 +66,10 @@ const PickupTable = () => {
         </Tfoot>
       </Table>
     </TableContainer>
+    { selectedRequest && (<PickupRequestCard isOpen={isModalOpen} onClose={ handleCloseModal } requestId={selectedRequest}  /> )
+
+    }
+    </>
   );
 };
 
