@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalHeader, ModalContent, ModalBody, ModalCloseButton, Stack,  Button ,StackDivider, Text, Heading, ModalFooter } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalHeader, ModalContent, ModalBody, ModalCloseButton, Stack,  Button , Divider, Text, Heading, ModalFooter } from '@chakra-ui/react';
 
 
 import React from 'react'
@@ -12,6 +12,7 @@ interface PickupRequestCardProps {
 
 const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, requestId }) => {
   const { request, error, isLoading } = useRequest(requestId);
+
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
@@ -23,6 +24,8 @@ const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, 
   if (!request) {
     return <Text>No request found.</Text>;
   }
+  const date = new Date(request.request_date).toISOString().slice(0, 10);
+  // const time = new Date(request.request_date).toISOString().slice(11, 19);
 
   
 
@@ -33,11 +36,35 @@ const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, 
                 <ModalHeader>Pickup Request Details</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Text>ID: {request.id}</Text>
-                    <Text>Email: {request.user_email}</Text>
-                    <Text>Date: {request.request_date}</Text>
-                    <Text>Amount Due: {request.amount_due}</Text>
-                    <Text>Status: {request.status}</Text>
+                  <Stack spacing={4} p={4}>
+                    <Stack direction='row' spacing={4}>
+                      <Stack direction='column' spacing={2} flex='5' pr={2}>
+                        <Text fontWeight='bold'>Request ID</Text>
+                        <Divider orientation='horizontal' />
+                        <Text fontWeight='bold'>Date</Text>
+                        <Divider orientation='horizontal' />
+                        <Text fontWeight='bold'>Status</Text>
+                        <Divider orientation='horizontal' />
+                        <Text fontWeight='bold'>Amount Due</Text>
+                        <Divider orientation='horizontal' />
+                        <Text fontWeight='bold'>Payment Status</Text>
+                      </Stack>
+
+                      <Divider orientation='vertical' />
+
+                      <Stack direction='column' spacing={2} flex='2'>
+                        <Text textAlign={'right'}>#{request.id}</Text>
+                        <Divider orientation='horizontal' />
+                        <Text textAlign={'right'}>{date}</Text>
+                        <Divider orientation='horizontal' />
+                        <Text textAlign={'right'}>{request.status}</Text>
+                        <Divider orientation='horizontal' />
+                        <Text textAlign={'right'}>{request.amount_due}</Text>
+                        <Divider orientation='horizontal' />
+                        <Text textAlign={'right'}>{request.payment_status}</Text>
+                      </Stack>
+                    </Stack>
+                  </Stack>
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="blue" onClick={onClose}>Close</Button>
