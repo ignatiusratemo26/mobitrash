@@ -14,5 +14,5 @@ urlpatterns = [
     path('admin/pickup-list/<int:pk>/update-weight/', AdminPickupRequestViewSet.as_view({'patch': 'update_weight'}), name='update-pickup-weight'),
     
     path('pickup-requests/', PickupRequestViewSet.as_view({'get': 'list_user_pickups', 'post': 'create'}), name='user-pickup-requests'),
-    path('pickup-requests/<int:pk>/', PickupRequestViewSet.as_view({'get': 'retrieve_pickup_request'}), name='user-retrieve-pickup-request'),
+    path('pickup-requests/<int:pk>/', PickupRequestViewSet.as_view({'get': 'retrieve_pickup_request', 'delete': 'destroy'}), name='user-retrieve-pickup-request'),
 ]

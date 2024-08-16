@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Badge, Button } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, Badge, Button, useBreakpointValue } from '@chakra-ui/react';
 import useRequests from '../hooks/useRequests';
-import { ViewIcon } from '@chakra-ui/icons';
+import { CloseIcon, ViewIcon } from '@chakra-ui/icons';
 import useRequestView from '../hooks/useRequestView';
 import PickupRequestCard from './PickupRequestCard';
+import useDeleteRequest from '../hooks/useDeleteRequest';
+
 
 const PickupTable = () => {
   const { requests, error, isLoading } = useRequests();
+  const deleteRequest = useDeleteRequest();
   const skeletons = [1];
   // const handleView = useRequestView();
-
+  const isMobileOrTablet = useBreakpointValue({ base: true, md: false });
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
 
@@ -21,6 +24,10 @@ const PickupTable = () => {
     setIsModalOpen(false);
     setSelectedRequest(null);
   }
+  const handleDeleteRequest = (id: number) => {
+    deleteRequest(id)
+  }
+  
   
 
   return (
@@ -31,17 +38,17 @@ const PickupTable = () => {
         <Thead>
           <Tr>
             <Th>Pickup ID</Th>
-            <Th>Date</Th>
+            <Th display={{ base: 'none', md: 'table-cell' }}>Date</Th>
             <Th>Status</Th>
             <Th>Actions</Th>
-            <Th isNumeric>Cost</Th>
+            <Th display={{ base: 'none', md: 'table-cell' }} isNumeric>Cost</Th>
           </Tr>
         </Thead>
         <Tbody>
           {requests.map((request) => (
             <Tr key={request.id}>
               <Td>#{request.id}</Td>
-              <Td>
+              <Td display={{ base: 'none', md: 'table-cell' }}>
                 {new Date(request.request_date).toISOString().slice(0, 10) +' '+ 
                 new Date(request.request_date).toISOString().slice(11, 19) }</Td>
               <Td><Badge
@@ -51,11 +58,14 @@ const PickupTable = () => {
               </Badge>
               </Td>
               <Td>
-              <Button size="xs" rightIcon={<ViewIcon />} colorScheme='teal' variant='outline' onClick={() => handleView(request.id)}>
-                View
-              </Button>
+                <Button size="xs" rightIcon={<ViewIcon />} colorScheme='teal' variant='outline' mr={2} onClick={() => handleView(request.id)}>
+                  View
+                </Button>
+                { request.status === 'Pending' && 
+                ( <Button size="xs" rightIcon={<CloseIcon />} colorScheme='red' variant='outline' onClick={() => handleDeleteRequest(request.id)}>
+                  Delete </Button> )}
               </Td>
-              <Td isNumeric>{request.amount_due}</Td>
+              <Td display={{ base: 'none', md: 'table-cell' }} isNumeric>{request.amount_due}</Td>
             </Tr>
           ))}
         </Tbody>
