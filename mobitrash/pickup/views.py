@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model, authenticate
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwner
 from .serializers import PickupRequestSerializer
 from .models import PickupRequest
-from rest_framework import permissions, mixins, generics, viewsets,filters,status
-from rest_framework.views import APIView
+from rest_framework import permissions, viewsets,filters,status
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from django_filters.rest_framework import DjangoFilterBackend
@@ -53,11 +52,11 @@ class AdminPickupRequestViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
 class PickupRequestViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAuthenticated ,IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated ,IsOwner)
     serializer_class = PickupRequestSerializer
     queryset = PickupRequest.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
-    
+    http_method_names = ['get', 'post', 'put', 'patch', 'delete'] 
     ordering_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     search_fields = ['pickup_date', 'user__email','user__id', 'status', ]  # Add fields you want to search on
     filterset_fields = ['pickup_date', 'user__email','user__id', 'status', ]
@@ -110,4 +109,23 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(pickup_request)
         return Response(serializer.data)
-    
+
+    def destroy(self, request, *args, **kwargs):
+        """
+        Destroys a pickup request instance.
+
+        Parameters:
+        request (Request): The incoming request object.
+        *args: Variable length argument list.
+        **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+        Response: A HTTP response object with a 204 status code if the instance is successfully destroyed.
+                 A HTTP response object with a 400 status code if the instance is not in a 'Pending' status.
+        """
+        instance = self.get_object()
+        if instance.status != 'Pending':
+            return Response({'detail': 'Only pending requests can be deleted.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
