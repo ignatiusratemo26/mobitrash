@@ -7,3 +7,6 @@ class PickupRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = PickupRequest
         fields = '__all__'
+        extra_kwargs = {
+            'user': {'required': False, 'read_only': True}
+        }
