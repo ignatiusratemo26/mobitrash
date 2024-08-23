@@ -17,16 +17,17 @@ const useDeleteRequest = () => {
             duration: 5000,
             isClosable: true,
             });
-          return;
+          /* --------------------------------- return; -------------------------------- */
         }
       
         try {
-          const response = await api.delete(`/pickup-api/pickup-requests/${requestId}/`, {
-            headers: { Authorization: `Bearer ${token}` }
+          const response = await api.patch(`/pickup-api/pickup-request/${requestId}/cancel/`,{}, {
+            headers: { Authorization: `Bearer ${token}`
+          }
           });
           toast({
             title: 'Success',
-            description: 'Request deleted successfully.',
+            description: 'Request cancelled successfully.',
             status: 'success',
             duration: 5000,
             isClosable: true,
@@ -34,7 +35,7 @@ const useDeleteRequest = () => {
         } catch (error: any) {
             toast({
             title: 'Error',
-            description: `Error deleting the request: ${error.message}`,
+            description: `Error cancelling the request: ${error.message}`,
             status: 'error',
             duration: 5000,
             isClosable: true,

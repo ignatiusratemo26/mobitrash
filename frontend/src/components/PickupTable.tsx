@@ -39,7 +39,7 @@ const PickupTable = () => {
           <Tr>
             <Th>Pickup ID</Th>
             <Th display={{ base: 'none', md: 'table-cell' }}>Date</Th>
-            <Th>Status</Th>
+            <Th display={{ base: 'none', md: 'table-cell' }}>Status</Th>
             <Th>Actions</Th>
             <Th display={{ base: 'none', md: 'table-cell' }} isNumeric>Cost</Th>
           </Tr>
@@ -51,7 +51,7 @@ const PickupTable = () => {
               <Td display={{ base: 'none', md: 'table-cell' }}>
                 {new Date(request.request_date).toISOString().slice(0, 10) +' '+ 
                 new Date(request.request_date).toISOString().slice(11, 19) }</Td>
-              <Td><Badge
+              <Td display={{ base: 'none', md: 'table-cell' }}><Badge
                 variant={request.status === 'Pending' ? 'outline' : 'solid'}
                 colorScheme={request.status === 'Completed' ? 'green' : 'yellow'}>
                 {request.status}
@@ -63,7 +63,7 @@ const PickupTable = () => {
                 </Button>
                 { request.status === 'Pending' && 
                 ( <Button size="xs" rightIcon={<CloseIcon />} colorScheme='red' variant='outline' onClick={() => handleDeleteRequest(request.id)}>
-                  Delete </Button> )}
+                  Cancel </Button> )}
               </Td>
               <Td display={{ base: 'none', md: 'table-cell' }} isNumeric>{request.amount_due}</Td>
             </Tr>
