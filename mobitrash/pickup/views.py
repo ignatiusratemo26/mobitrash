@@ -61,10 +61,12 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
     search_fields = ['pickup_date', 'user__email','user__id', 'status', ]  # Add fields you want to search on
     filterset_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     
-    
     def create(self, request, *args, **kwargs):
-        user_id = self.kwargs.get('user_id')
-        user = User.objects.get(id=user_id)
+        try:
+            user = request.user
+        except User.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+        
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=user)
