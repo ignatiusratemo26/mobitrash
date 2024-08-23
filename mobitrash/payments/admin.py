@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mobitrash.payments.models import Payment
+from .models import Payment
 
 # Register your models here.
 @admin.register(Payment)
