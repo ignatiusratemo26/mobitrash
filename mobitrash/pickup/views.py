@@ -109,19 +109,29 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(pickup_request)
         return Response(serializer.data)
-
+    
+    @action(detail=True, methods=['patch'], url_path='update-request')
+    def update_request(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = PickupRequestSerializer(instance, data= request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['patch'], url_path='cancel')
+    def cancel_request(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.status != 'Pending':
+            return Response({'detail': 'Only pending requests can be canceled.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance.status = 'Canceled'
+        instance.save()
+        serializer = PickupRequestSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
     def destroy(self, request, *args, **kwargs):
         """
         Destroys a pickup request instance.
-
-        Parameters:
-        request (Request): The incoming request object.
-        *args: Variable length argument list.
-        **kwargs: Arbitrary keyword arguments.
-
-        Returns:
-        Response: A HTTP response object with a 204 status code if the instance is successfully destroyed.
-                 A HTTP response object with a 400 status code if the instance is not in a 'Pending' status.
         """
         instance = self.get_object()
         if instance.status != 'Pending':

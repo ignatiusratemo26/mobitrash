@@ -15,4 +15,6 @@ urlpatterns = [
     
     path('pickup-requests/', PickupRequestViewSet.as_view({'get': 'list_user_pickups', 'post': 'create'}), name='user-pickup-requests'),
     path('pickup-requests/<int:pk>/', PickupRequestViewSet.as_view({'get': 'retrieve_pickup_request', 'delete': 'destroy'}), name='user-retrieve-pickup-request'),
+    path('pickup-request/<int:pk>/update-request/', PickupRequestViewSet.as_view({'patch': 'update_request'}), name='update-pickup-request'),
+    path('pickup-request/<int:pk>/cancel/', PickupRequestViewSet.as_view({'patch': 'cancel_request'}), name='cancel-pickup-request'),
 ]
