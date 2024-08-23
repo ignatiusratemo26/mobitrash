@@ -32,6 +32,7 @@ const useDeleteRequest = () => {
             duration: 5000,
             isClosable: true,
         });
+        window.location.reload();
         } catch (error: any) {
             toast({
             title: 'Error',
