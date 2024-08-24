@@ -11,4 +11,5 @@ urlpatterns += [
     path('admin/', admin.site.urls),
     path('accounts-api/', include('accounts.urls')),
     path('pickup-api/', include('pickup.urls')),
+    path('payment-api/', include('payments.urls')),
 ]
