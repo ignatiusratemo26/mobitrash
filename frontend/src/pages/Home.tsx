@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, GridItem, Button, Flex } from '@chakra-ui/react';
 import AnalyticsCard from '../components/AnalyticsCard';
 import PickupTable from '../components/PickupTable';
@@ -12,6 +12,8 @@ function Home() {
   const { currentUser } = useAuth();
   
   const navigate = useNavigate();
+
+
   const handleNewRequest = () => {
     navigate('/pickup_requests');
     };
@@ -20,7 +22,7 @@ function Home() {
       // Show a loading state or redirect to login if the user is not authenticated
       return <div>Loading...</div>;
     }
-
+    
   return (
     <Box p={4}>
       <Grid templateColumns="1fr" gap={6} justifyItems="center">

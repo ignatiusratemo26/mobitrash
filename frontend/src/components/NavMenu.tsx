@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, useColorModeValue, Icon, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import { FaHome, FaTruck, FaDollarSign, FaQuestionCircle, FaBars, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { HamburgerIcon } from '@chakra-ui/icons';
 
 const NavItem: React.FC<{ to: string; icon: any; children: React.ReactNode }> = ({ to, icon, children }) => {
   const itemBg = useColorModeValue('white', 'gray.600');
@@ -35,7 +36,11 @@ const NavMenu: React.FC = () => {
     <Box>
       {isMobile ? (
         <Menu>
-          <MenuButton as={Button} rightIcon={<FaBars />} />
+          <MenuButton as={Button} 
+          rightIcon={<HamburgerIcon />}
+          variant="ghost"
+          size='sm'
+          />
           <MenuList>
             <MenuItem as={Link} to="/">
               <Icon as={FaHome} mr={2} />

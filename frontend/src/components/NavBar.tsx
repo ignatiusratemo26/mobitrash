@@ -4,7 +4,7 @@ import { Box, Flex, Image, Input, AvatarGroup, Avatar,
    useColorModeValue,
    useMediaQuery} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/LOGO.png';
+import logo from '../assets/images/mobitrash-logo-white.png';
 import useAuth from '../hooks/useAuth';
 import { AddIcon, SearchIcon } from '@chakra-ui/icons';
 import { FaCalendar, FaMoon, FaSignOutAlt, FaSun, FaUser } from 'react-icons/fa';
@@ -22,14 +22,10 @@ const NavBar = () => {
   return (
     <Box as="header" bg="blue.500" p={3}>
       <Flex justify="space-between" align="center">
-        { isMobile && (
-          <NavMenu />
-        )}
-
         <Image 
           src={logo} 
           boxSize="auto" // Set boxSize to auto to allow responsive sizing
-          maxWidth="100px" // You can adjust maxWidth as needed
+          maxWidth="35px" // You can adjust maxWidth as needed
           height="auto" 
           objectFit="contain" // Maintains aspect ratio
         />
@@ -44,13 +40,16 @@ const NavBar = () => {
             placeholder="Search..." 
             borderColor="gray.700" 
             _placeholder={{ color: 'gray.700' }}
+            size={isMobile ? "sm" : "md"}
           />
         </InputGroup>
         <Menu>
           <MenuButton> 
           <AvatarGroup spacing='1rem '>
               { currentUser ?
-              <Avatar bg='grey.500' name={`${currentUser?.first_name} ${currentUser?.last_name}`} /> : <Avatar bg='teal.500' />  }
+              <Avatar bg='grey.500' name={`${currentUser?.first_name} ${currentUser?.last_name}`} size={isMobile ? "sm" : "md"} /> 
+              : 
+              <Avatar bg='teal.500' size={isMobile ? "sm" : "md"} />  }
             </AvatarGroup>
           </MenuButton>
 
@@ -69,6 +68,10 @@ const NavBar = () => {
             </MenuItem>
           </MenuList>
         </Menu>
+
+        { isMobile && (
+          <NavMenu />
+        )}
 
       </Flex>
     </Box>
