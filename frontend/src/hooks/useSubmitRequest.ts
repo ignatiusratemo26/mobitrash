@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import api from '../services/api';
-import useAuth from './useAuth';
-import { set } from 'react-hook-form';
 import { CanceledError } from 'axios';
 
 interface Request {
@@ -18,51 +16,64 @@ const useSubmitRequest = () => {
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
     const token = localStorage.getItem('token');
     const [error, setError] = useState('');
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(false);
     const [requests, setRequests] = useState<Request[]>([]);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setLocation({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-          },
-          (err) => {
-            console.error('Error fetching location:', err);
-          }
+            (position) => {
+                console.log('Location fetched:', position.coords);
+                setLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            },
+            (err) => {
+                console.error('Error fetching location:', err);
+            }
         );
-      }, []);
+    }, []);
 
-      const submitRequest = async () => {
-          setLoading(true);
-          if (!token) {
-              console.log('No token found');
-              return;
-          }
-          if (location) {
-              await api.post<Request>('/pickup-api/pickup-requests/', { 
-                location: {latitude: location.lat,longitude: location.lng,},
-              },
-              {
-                  headers : { Authorization: `Bearer ${token}`},
-                  
-              })
-              .then(response => {
-                  setRequests([response.data]);
-                  setLoading(false);
-              })
-      
-              .catch (error =>  {
-                  if (error instanceof CanceledError) return;
-                      setError(error.message);
-                      setLoading(false);
-              });
-          }
-      };
+    const submitRequest = async () => {
+        setLoading(true);
+        if (!token) {
+            console.log('No token found');
+            setError('Authentication token is missing.');
+            setLoading(false);
+            return;
+        }
 
-  return { location, submitRequest };
-}
+        if (location) {
+            console.log('Submitting request with location:', location);
+            await api.post<Request>(
+                '/pickup-api/pickup-requests/',
+                { 
+                    latitude: location.lat,
+                    longitude: location.lng,
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            )
+            .then((response) => {
+                console.log('Response data:', response.data);
+                setRequests([response.data]);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error('Error submitting request:', error);
+                if (error instanceof CanceledError) return;
+                setError(error.message);
+                setLoading(false);
+            });
+        } else {
+            console.log('Location is null, request not submitted.');
+            setError('Location data is missing.');
+            setLoading(false);
+        }
+    };
 
-export default useSubmitRequest
+    return { location, submitRequest, isLoading, error, requests };
+};
+
+export default useSubmitRequest;

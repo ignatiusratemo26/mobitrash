@@ -22,8 +22,8 @@ class PickupRequest(models.Model):
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Weight in kg
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='Pending')
     amount_due = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=12, decimal_places=8, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=12, decimal_places=8, null=True, blank=True)
 
     def calculate_amount_due(self):
         # Assume a rate per kg, e.g., Ksh.30 per kg
