@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import { CanceledError } from 'axios';
+import { useToast } from '@chakra-ui/react';
 
 interface Request {
     id: number;
@@ -15,6 +16,7 @@ interface Request {
 const useSubmitRequest = () => {
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
     const token = localStorage.getItem('token');
+    const toast = useToast();
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [requests, setRequests] = useState<Request[]>([]);
@@ -59,6 +61,14 @@ const useSubmitRequest = () => {
                 console.log('Response data:', response.data);
                 setRequests([response.data]);
                 setLoading(false);
+                toast({
+                    title: 'Success',
+                    description: 'Request submitted successfully.',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
+                window.location.reload();
             })
             .catch((error) => {
                 console.error('Error submitting request:', error);

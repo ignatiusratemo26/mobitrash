@@ -38,12 +38,23 @@ function Home() {
 
           <PickupTable />
         </GridItem>
-        <GridItem>
-          <Grid templateColumns="repeat(2, 1fr)" gap={4} width="80%">
-            <AnalyticsCard title="Analytics 1" content="123" />
-            <AnalyticsCard title="Analytics 2" content="456" />
+
+        <GridItem width="100%">
+          <Grid 
+          templateColumns={{ base: '1fr', md: 'repeat(auto-fit, minmax(200px, 1fr))' }} 
+          gap={4} 
+          width="100%"
+          templateRows={{ base: 'repeat(2, 1fr)', md: 'auto' }}
+          >
+            <GridItem>
+              <AnalyticsCard title="Analytics 1" content="123" />
+            </GridItem>
+            <GridItem>
+              <AnalyticsCard title="Analytics 2" content="456" />
+            </GridItem>
           </Grid>
         </GridItem>
+
       </Grid>
     </Box>
   );
