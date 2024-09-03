@@ -4,18 +4,20 @@ import AnalyticsCard from '../components/AnalyticsCard';
 import PickupTable from '../components/PickupTable';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import useSubmitRequest from '../hooks/useSubmitRequest';
 
 
 
 
 function Home() {
   const { currentUser } = useAuth();
-  
+  const {submitRequest} = useSubmitRequest();
   const navigate = useNavigate();
 
 
   const handleNewRequest = () => {
-    navigate('/pickup_requests');
+    submitRequest();
+
     };
 
     if (!currentUser) {
