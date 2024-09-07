@@ -41,29 +41,29 @@ const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, 
                   <Stack spacing={4} p={2}>
                     <Stack direction='row' spacing={4}>
                       <Stack direction='column' spacing={2} flex='2' pr={2}>
-                        <Text fontWeight='bold'>Request ID</Text>
+                        <Text fontWeight='bold' fontSize='sm'>Request ID</Text>
                         <Divider orientation='horizontal' />
-                        <Text fontWeight='bold'>Date</Text>
+                        <Text fontWeight='bold' fontSize='sm' >Date</Text>
                         <Divider orientation='horizontal' />
-                        <Text fontWeight='bold'>Status</Text>
+                        <Text fontWeight='bold' fontSize='sm' >Status</Text>
                         <Divider orientation='horizontal' />
-                        <Text fontWeight='bold'>Amount Due</Text>
+                        <Text fontWeight='bold' fontSize='sm' >Amount Due</Text>
                         <Divider orientation='horizontal' />
-                        <Text fontWeight='bold'>Payment Status</Text>
+                        <Text fontWeight='bold' fontSize='sm' >Payment Status</Text>
                       </Stack>
 
                       <Divider orientation='vertical' />
 
                       <Stack direction='column' spacing={2} flex='2'>
-                        <Text textAlign={'right'}>#{request.id}</Text>
+                        <Text textAlign={'right'} fontSize='sm'>#{request.id}</Text>
                         <Divider orientation='horizontal' />
-                        <Text textAlign={'right'}>{date}</Text>
+                        <Text textAlign={'right'} fontSize='sm'>{date}</Text>
                         <Divider orientation='horizontal' />
-                        <Text textAlign={'right'}>{request.status}</Text>
+                        <Text textAlign={'right'} fontSize='sm'>{request.status}</Text>
                         <Divider orientation='horizontal' />
-                        <Text textAlign={'right'}>{request.amount_due  == null ? 'n/a' : request.amount_due }</Text>
+                        <Text textAlign={'right'} fontSize='sm'>{request.amount_due  == null ? 'n/a' : request.amount_due }</Text>
                         <Divider orientation='horizontal' />
-                        <Text textAlign={'right'}>{ request.payment_status}</Text>
+                        <Text textAlign={'right'} fontSize='sm' >{ request.payment_status}</Text>
                       </Stack>
                     </Stack>
                   </Stack>
