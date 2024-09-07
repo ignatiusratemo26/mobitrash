@@ -30,15 +30,17 @@ const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, 
   
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
+    <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'
+    size='sm'
+    >
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Pickup Request Details</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Stack spacing={4} p={4}>
+                  <Stack spacing={4} p={2}>
                     <Stack direction='row' spacing={4}>
-                      <Stack direction='column' spacing={2} flex='5' pr={2}>
+                      <Stack direction='column' spacing={2} flex='2' pr={2}>
                         <Text fontWeight='bold'>Request ID</Text>
                         <Divider orientation='horizontal' />
                         <Text fontWeight='bold'>Date</Text>
@@ -59,9 +61,9 @@ const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, 
                         <Divider orientation='horizontal' />
                         <Text textAlign={'right'}>{request.status}</Text>
                         <Divider orientation='horizontal' />
-                        <Text textAlign={'right'}>{request.amount_due}</Text>
+                        <Text textAlign={'right'}>{request.amount_due  == null ? 'n/a' : request.amount_due }</Text>
                         <Divider orientation='horizontal' />
-                        <Text textAlign={'right'}>{request.payment_status}</Text>
+                        <Text textAlign={'right'}>{ request.payment_status}</Text>
                       </Stack>
                     </Stack>
                   </Stack>
