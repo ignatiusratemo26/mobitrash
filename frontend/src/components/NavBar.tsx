@@ -19,15 +19,18 @@ const NavBar = () => {
   const navBg = useColorModeValue('gray.200', 'gray.700');
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
+  const navBgImage = "https://source.unsplash.com/random";
+  
   return (
-    <Box as="header" bg="blue.500" p={3}>
+    <Box as="header" bg="blue.500" p={3} zIndex={4} >
+
       <Flex justify="space-between" align="center">
         <Image 
           src={logo} 
-          boxSize="auto" // Set boxSize to auto to allow responsive sizing
-          maxWidth="35px" // You can adjust maxWidth as needed
+          boxSize="auto" 
+          maxWidth="35px" 
           height="auto" 
-          objectFit="contain" // Maintains aspect ratio
+          objectFit="contain" 
         />
 
 

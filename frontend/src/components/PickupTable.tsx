@@ -15,7 +15,6 @@ const PickupTable = () => {
   const { requests, error, isLoading } = useRequests();
   const deleteRequest = useDeleteRequest();
   const skeletons = [1];
-  // const handleView = useRequestView();
   const isMobileOrTablet = useBreakpointValue({ base: true, md: false });
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
@@ -52,7 +51,7 @@ const PickupTable = () => {
               <Text fontSize='lg' fontWeight='bold'>
                 Pickup Requests
               </Text>
-              <Button variant='primary' maxH='30px'>
+              <Button colorScheme='blue' maxH='20px'>
                 SEE ALL
               </Button>
             </Flex>

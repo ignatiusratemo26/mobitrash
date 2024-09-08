@@ -69,7 +69,8 @@ const PickupRequestCard: React.FC<PickupRequestCardProps> = ({ isOpen, onClose, 
                   </Stack>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme="blue" onClick={onClose}>Close</Button>
+                    { request.amount_due !== null && ( <Button colorScheme="green" mr ='4px' size='sm' >Pay Now</Button> )}
+                    <Button colorScheme="blue" onClick={onClose} size='sm' >Close</Button>
                 </ModalFooter>
             </ModalContent>
       </Modal>
