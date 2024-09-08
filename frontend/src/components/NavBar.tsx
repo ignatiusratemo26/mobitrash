@@ -60,7 +60,7 @@ const NavBar = () => {
             <MenuItem icon={<FaUser />} onClick={() => navigate('/profile')}>
                 My Profile
             </MenuItem>            
-            <MenuItem icon={<FaCalendar />} onClick={() => navigate('/my_requests')}>
+            <MenuItem icon={<FaCalendar />} onClick={() => navigate('/pickup-requests')}>
               My requests
             </MenuItem>
             <MenuItem icon={<Icon as={colorMode === 'light' ? FaMoon : FaSun} />} onClick={toggleColorMode}>

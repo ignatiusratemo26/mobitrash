@@ -9,16 +9,17 @@ import { CloseIcon, ViewIcon } from '@chakra-ui/icons';
 import useRequestView from '../hooks/useRequestView';
 import PickupRequestCard from './PickupRequestCard';
 import useDeleteRequest from '../hooks/useDeleteRequest';
+import { useNavigate } from 'react-router-dom';
 
 
-const PickupTable = () => {
+const RecentPickupTable = () => {
   const { requests, error, isLoading } = useRequests();
   const deleteRequest = useDeleteRequest();
   const skeletons = [1];
   const isMobileOrTablet = useBreakpointValue({ base: true, md: false });
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
-
+  const navigate = useNavigate();
   const { colorMode } = useColorMode();
 
   const iconBlue = useColorModeValue("blue.500", "blue.500");
@@ -45,12 +46,15 @@ const PickupTable = () => {
   return (
     <>
 
-      <Card p='0px' maxW={{ sm: "320px", md: "100%" }} maxHeight={'80vh'} overflowY={'auto'}>
+      <Card p='0px' maxW={{ sm: "320px", md: "100%" }} maxHeight={'40vh'} overflowY={'auto'}>
           <Flex direction='column'>
             <Flex align='center' justify='space-between' p='22px'>
               <Text fontSize='lg' fontWeight='bold'>
                 Pickup Requests
               </Text>
+              <Button colorScheme='blue' maxH='20px' onClick={()=> navigate('/pickup-requests')} >
+                SEE ALL
+              </Button>
             </Flex>
             <Box overflow={{ sm: "scroll", lg: "hidden" }}>
               <Table>
@@ -172,4 +176,4 @@ const PickupTable = () => {
   );
 };
 
-export default PickupTable;
+export default RecentPickupTable;

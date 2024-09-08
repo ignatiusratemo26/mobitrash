@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid, GridItem, Button, Flex } from '@chakra-ui/react';
 import AnalyticsCard from '../components/AnalyticsCard';
-import PickupTable from '../components/PickupTable';
+import RecentPickupTable from '../components/RecentPickupTable';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useSubmitRequest from '../hooks/useSubmitRequest';
@@ -36,7 +36,7 @@ function Home() {
               </Button>
             </Flex>
 
-          <PickupTable />
+          <RecentPickupTable />
         </GridItem>
 
         <GridItem width="100%">

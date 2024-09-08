@@ -5,7 +5,6 @@ import PickupTable from '../components/PickupTable'
 const PickupRequests = () => {
   return (
     <>
-      <Text size={'lg'}>Pickup Requests</Text>
       <PickupTable />
     </>
   )
