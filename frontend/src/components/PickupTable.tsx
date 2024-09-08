@@ -15,15 +15,9 @@ const PickupTable = () => {
   const { requests, error, isLoading } = useRequests();
   const deleteRequest = useDeleteRequest();
   const skeletons = [1];
-  const isMobileOrTablet = useBreakpointValue({ base: true, md: false });
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
 
-  const { colorMode } = useColorMode();
-
-  const iconBlue = useColorModeValue("blue.500", "blue.500");
-  const iconBoxInside = useColorModeValue("white", "white");
-  const textColor = useColorModeValue("gray.700", "white");
   const tableRowColor = useColorModeValue("#F7FAFC", "navy.900");
   const borderColor = useColorModeValue("gray.200", "gray.600");
   const textTableColor = useColorModeValue("gray.500", "white");
