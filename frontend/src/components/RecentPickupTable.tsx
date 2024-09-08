@@ -48,7 +48,7 @@ const RecentPickupTable = () => {
 
       <Card p='0px' maxW={{ sm: "320px", md: "100%" }} maxHeight={'40vh'} overflowY={'auto'}>
           <Flex direction='column'>
-            <Flex align='center' justify='space-between' p='22px'>
+            <Flex align='center' justify='space-between' p='10px'>
               <Text fontSize='lg' fontWeight='bold'>
                 Pickup Requests
               </Text>

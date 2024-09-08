@@ -4,6 +4,7 @@ import { useColorModeValue,
 
 import React from 'react'
 import { FaAddressBook, FaDollarSign, FaDownload, FaEnvelope, FaMoneyBill, FaPhone, FaSignOutAlt } from 'react-icons/fa'
+import PaymentsTable from '../components/PaymentsTable';
 
 const Payments = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
@@ -100,7 +101,7 @@ const Payments = () => {
               See your payment history below.
             </Text>
           </Flex>
-
+          
           <Button 
           fontSize={ isMobile ? 'xs' : 'sm'} rounded={'full'} bg={'blue.400'} color={'white'} boxShadow={
             '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
@@ -119,39 +120,8 @@ const Payments = () => {
           </Button>
         </Flex>
 
+        <PaymentsTable />
 
-
-
-        <Stack mt={8} direction={'row'} spacing={4}>
-          <Button
-
-            
-            flex={1}
-            fontSize={ isMobile ? 'xs' : 'sm'}
-            rounded={'full'}
-            _focus={{
-              bg: 'gray.200',
-            }}
-            leftIcon={<FaSignOutAlt />}
-            >
-            Logout
-          </Button>
-          <Button
-            onClick={() => console.log('Edit profile')}
-            flex={1} fontSize={'sm'} rounded={'full'} bg={'blue.400'} color={'white'} boxShadow={
-              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-            }
-            _hover={{
-              bg: 'blue.600',
-            }}
-            _focus={{
-              bg: 'blue.500',
-            }}
-            leftIcon={<FaDownload />}
-            >
-            Download Receipt
-          </Button>
-        </Stack>
       </Box>
     </Box>
     </>
