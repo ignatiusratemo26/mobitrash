@@ -28,7 +28,7 @@ function Home() {
   return (
     <Box p={4}>
       <Grid templateColumns="1fr" gap={6} justifyItems="center">
-        <GridItem width="80%" height="50vh">
+        <GridItem width="90%" height="50vh">
 
           <Flex justifyContent="flex-end" mb={4} pr={4}>
               <Button colorScheme='blue' variant='outline' size="sm" onClick={handleNewRequest}>

@@ -46,22 +46,31 @@ const RecentPickupTable = () => {
   return (
     <>
 
-      <Card p='0px' maxW={{ sm: "320px", md: "100%" }} maxHeight={'40vh'} overflowY={'auto'}>
+      <Card p='0px' maxW={{ sm: "380px", md: "100%" }} maxHeight={'40vh'} overflowY={'auto'}>
           <Flex direction='column'>
             <Flex align='center' justify='space-between' p='10px'>
               <Text fontSize='lg' fontWeight='bold'>
                 Pickup Requests
               </Text>
-              <Button colorScheme='blue' maxH='20px' onClick={()=> navigate('/pickup-requests')} >
-                SEE ALL
+              <Button colorScheme='blue' maxH='20px' onClick={()=> navigate('/pickup-requests')}
+              size={isMobileOrTablet ? 'xs' : 'sm'} 
+              >
+                view all
               </Button>
             </Flex>
             <Box overflow={{ sm: "scroll", lg: "hidden" }}>
-              <Table>
+              <Table
+                variant='simple'
+                size='sm'
+                colorScheme='blackAlpha'
+                borderWidth='1px'
+                borderColor={borderColor}
+                borderRadius='md'
+              >
                 <Thead>
                   <Tr bg={tableRowColor}>
                     <Th color='gray.400' borderColor={borderColor}>
-                      Request ID
+                      Rq. ID
                     </Th>
                     <Th color='gray.400' borderColor={borderColor}>
                       Date
@@ -69,7 +78,7 @@ const RecentPickupTable = () => {
                     <Th color='gray.400' borderColor={borderColor}>
                       Actions
                     </Th>
-                    <Th color='gray.400' borderColor={borderColor}>
+                    <Th color='gray.400' borderColor={borderColor} display={{ base: 'none', md: 'table-cell' }}>
                       Status
                     </Th>
                   </Tr>
@@ -89,8 +98,7 @@ const RecentPickupTable = () => {
                           color={textTableColor}
                           fontSize='sm'
                           borderColor={borderColor}>
-                          {new Date(request.request_date).toISOString().slice(0, 10) +'  '+ 
-                          new Date(request.request_date).toISOString().slice(11, 16) }
+                          {new Date(request.request_date).toISOString().slice(0, 10) }
                         </Td>
                         <Td
                           color={textTableColor}

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Text, Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption,
-   TableContainer, Badge, Button, useBreakpointValue, 
+import { Text, Table, Thead, Tbody, Tfoot, Tr, Th, Td, 
    useColorMode,  useColorModeValue,
    Card, Flex, Box, 
    Icon} from '@chakra-ui/react';
-import { FaCheckCircle, FaCircle } from 'react-icons/fa';
+import { FaCircle } from 'react-icons/fa';
 
 
 const PaymentsTable = () => {
@@ -52,7 +51,7 @@ const PaymentsTable = () => {
               <Thead>
                 <Tr bg={tableRowColor}>
                   <Th color='gray.400' borderColor={borderColor}>
-                    Payment ID
+                    Transaction ID
                   </Th>
                   <Th color='gray.400' borderColor={borderColor}>
                     Date
@@ -69,7 +68,7 @@ const PaymentsTable = () => {
                 {payments.map((payment: any) => (
                   <Tr key={payment.id} >
                     <Td color={textTableColor} borderColor={borderColor}>
-                      {payment.id}
+                      Invoice#{payment.id}
                     </Td>
                     <Td color={textTableColor} borderColor={borderColor}>
                       {payment.date}

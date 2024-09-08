@@ -41,11 +41,7 @@ const PickupTable = () => {
 
       <Card p='0px' maxW={{ sm: "320px", md: "100%" }} maxHeight={'80vh'} overflowY={'auto'}>
           <Flex direction='column'>
-            <Flex align='center' justify='space-between' p='22px'>
-              <Text fontSize='lg' fontWeight='bold'>
-                Pickup Requests
-              </Text>
-            </Flex>
+
             <Box overflow={{ sm: "scroll", lg: "hidden" }}>
               <Table>
                 <Thead>
