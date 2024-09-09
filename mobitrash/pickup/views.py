@@ -57,7 +57,7 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
     queryset = PickupRequest.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     http_method_names = ['get', 'post', 'put', 'patch', 'delete'] 
-    ordering_fields = ['pickup_date', 'user__email','user__id', 'status', ]
+    ordering_fields = ['pickup_date', 'id']
     search_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     filterset_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     
@@ -74,13 +74,11 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
     def get_queryset(self):
-        if self.action in ['list_user_pickups', 'retrieve_by_user']:
-            return self.queryset.filter(user=self.request.user).order_by('-pickup_date')
-        return self.queryset.filter(user=self.request.user)
+        return self.queryset.filter(user=self.request.user).order_by('-id')
 
     
     def recent_pickups(self, request):
-        recent_pickups = PickupRequest.objects.filter(user=self.request.user).order_by('-pickup_date')[:3]
+        recent_pickups = PickupRequest.objects.filter(user=self.request.user).order_by('-id')[:4]
         page = self.paginate_queryset(recent_pickups)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
