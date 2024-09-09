@@ -60,7 +60,7 @@ const Payments = () => {
             width="100%"
             >
               <GridItem>
-                <Heading fontSize={ isMobile ? 'sm' : 'md'} fontFamily={'body'}>
+                <Heading fontSize={ isMobile ? 'md' : 'lg'} fontFamily={'body'}>
                   My Balance 
                 </Heading>
                 <Text>Ksh. 200.00</Text>
