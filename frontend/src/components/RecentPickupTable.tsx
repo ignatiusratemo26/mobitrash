@@ -4,23 +4,21 @@ import { Text, Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption,
    useColorMode,  useColorModeValue,
    Card, Flex, Box } from '@chakra-ui/react';
 
-import useRequests from '../hooks/useRequests';
 import { CloseIcon, ViewIcon } from '@chakra-ui/icons';
-import useRequestView from '../hooks/useRequestView';
 import PickupRequestCard from './PickupRequestCard';
 import useDeleteRequest from '../hooks/useDeleteRequest';
 import { useNavigate } from 'react-router-dom';
+import useRecentRequests from '../hooks/useRecentRequests';
 
 
 const RecentPickupTable = () => {
-  const { requests, error, isLoading } = useRequests();
+  const { requests, error, isLoading } = useRecentRequests();
   const deleteRequest = useDeleteRequest();
   const skeletons = [1];
   const isMobileOrTablet = useBreakpointValue({ base: true, md: false });
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
   const navigate = useNavigate();
-  const { colorMode } = useColorMode();
 
   const iconBlue = useColorModeValue("blue.500", "blue.500");
   const iconBoxInside = useColorModeValue("white", "white");
@@ -40,7 +38,6 @@ const RecentPickupTable = () => {
   const handleDeleteRequest = (id: number) => {
     deleteRequest(id)
   }
-  
   
 
   return (
