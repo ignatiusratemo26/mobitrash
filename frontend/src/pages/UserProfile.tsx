@@ -64,7 +64,7 @@ export default function UserProfile() {
             <Icon as={FaPhone} />
             <Text
             textAlign={'left'} color={useColorModeValue('gray.700', 'gray.400')} px={3} py={2} ml={2} whiteSpace="no-wrap">
-                Phone: {currentUser?.phone_number}
+                Phone: 0{currentUser?.phone_number}
             </Text>
         </Flex>
         <Flex align='center'>
@@ -75,29 +75,22 @@ export default function UserProfile() {
             </Text>
         </Flex>
 
-        <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
+        {/* <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
           <Badge
             px={2}
             py={1}
             bg={useColorModeValue('gray.50', 'gray.800')}
             fontWeight={'400'}>
-            #art
+            #green_planet
           </Badge>
           <Badge
             px={2}
             py={1}
             bg={useColorModeValue('gray.50', 'gray.800')}
             fontWeight={'400'}>
-            #photography
+            #requests
           </Badge>
-          <Badge
-            px={2}
-            py={1}
-            bg={useColorModeValue('gray.50', 'gray.800')}
-            fontWeight={'400'}>
-            #music
-          </Badge>
-        </Stack>
+        </Stack> */}
 
         <Stack mt={8} direction={'row'} spacing={4}>
           <Button

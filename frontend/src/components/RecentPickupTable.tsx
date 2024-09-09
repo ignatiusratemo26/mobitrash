@@ -9,15 +9,22 @@ import { CloseIcon, ViewIcon } from '@chakra-ui/icons';
 import useRequestView from '../hooks/useRequestView';
 import PickupRequestCard from './PickupRequestCard';
 import useDeleteRequest from '../hooks/useDeleteRequest';
+import { useNavigate } from 'react-router-dom';
 
 
-const PickupTable = () => {
+const RecentPickupTable = () => {
   const { requests, error, isLoading } = useRequests();
   const deleteRequest = useDeleteRequest();
   const skeletons = [1];
+  const isMobileOrTablet = useBreakpointValue({ base: true, md: false });
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedRequest, setSelectedRequest ] = useState<number | null>(null);
+  const navigate = useNavigate();
+  const { colorMode } = useColorMode();
 
+  const iconBlue = useColorModeValue("blue.500", "blue.500");
+  const iconBoxInside = useColorModeValue("white", "white");
+  const textColor = useColorModeValue("gray.700", "white");
   const tableRowColor = useColorModeValue("#F7FAFC", "navy.900");
   const borderColor = useColorModeValue("gray.200", "gray.600");
   const textTableColor = useColorModeValue("gray.500", "white");
@@ -39,15 +46,31 @@ const PickupTable = () => {
   return (
     <>
 
-      <Card p='0px' maxW={{ sm: "320px", md: "100%" }} maxHeight={'80vh'} overflowY={'auto'}>
+      <Card p='0px' maxW={{ sm: "380px", md: "100%" }} maxHeight={'40vh'} overflowY={'auto'}>
           <Flex direction='column'>
-
+            <Flex align='center' justify='space-between' p='10px'>
+              <Text fontSize='lg' fontWeight='bold'>
+                Pickup Requests
+              </Text>
+              <Button colorScheme='blue' maxH='20px' onClick={()=> navigate('/pickup-requests')}
+              size={isMobileOrTablet ? 'xs' : 'sm'} 
+              >
+                view all
+              </Button>
+            </Flex>
             <Box overflow={{ sm: "scroll", lg: "hidden" }}>
-              <Table>
+              <Table
+                variant='simple'
+                size='sm'
+                colorScheme='blackAlpha'
+                borderWidth='1px'
+                borderColor={borderColor}
+                borderRadius='md'
+              >
                 <Thead>
                   <Tr bg={tableRowColor}>
                     <Th color='gray.400' borderColor={borderColor}>
-                      Request ID
+                      Rq. ID
                     </Th>
                     <Th color='gray.400' borderColor={borderColor}>
                       Date
@@ -55,7 +78,7 @@ const PickupTable = () => {
                     <Th color='gray.400' borderColor={borderColor}>
                       Actions
                     </Th>
-                    <Th color='gray.400' borderColor={borderColor}>
+                    <Th color='gray.400' borderColor={borderColor} display={{ base: 'none', md: 'table-cell' }}>
                       Status
                     </Th>
                   </Tr>
@@ -75,8 +98,7 @@ const PickupTable = () => {
                           color={textTableColor}
                           fontSize='sm'
                           borderColor={borderColor}>
-                          {new Date(request.request_date).toISOString().slice(0, 10) +'  '+ 
-                          new Date(request.request_date).toISOString().slice(11, 16) }
+                          {new Date(request.request_date).toISOString().slice(0, 10) }
                         </Td>
                         <Td
                           color={textTableColor}
@@ -162,4 +184,4 @@ const PickupTable = () => {
   );
 };
 
-export default PickupTable;
+export default RecentPickupTable;

@@ -58,7 +58,7 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     http_method_names = ['get', 'post', 'put', 'patch', 'delete'] 
     ordering_fields = ['pickup_date', 'user__email','user__id', 'status', ]
-    search_fields = ['pickup_date', 'user__email','user__id', 'status', ]  # Add fields you want to search on
+    search_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     filterset_fields = ['pickup_date', 'user__email','user__id', 'status', ]
     
     def create(self, request, *args, **kwargs):
@@ -75,13 +75,12 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         if self.action in ['list_user_pickups', 'retrieve_by_user']:
-            return self.queryset.filter(user=self.request.user)
+            return self.queryset.filter(user=self.request.user).order_by('-pickup_date')
         return self.queryset.filter(user=self.request.user)
 
     
     def recent_pickups(self, request):
-        recent_pickups = PickupRequest.objects.filter(user=self.request.user).order_by('-pickup_date')
-
+        recent_pickups = PickupRequest.objects.filter(user=self.request.user).order_by('-pickup_date')[:3]
         page = self.paginate_queryset(recent_pickups)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -125,7 +124,8 @@ class PickupRequestViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         if instance.status != 'Pending':
             return Response({'detail': 'Only pending requests can be canceled.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+        if instance.user != request.user:
+            return Response({'detail': 'You are not allowed to cancel this request.'}, status=status.HTTP_403_FORBIDDEN)
         instance.status = 'Canceled'
         instance.save()
         serializer = PickupRequestSerializer(instance)

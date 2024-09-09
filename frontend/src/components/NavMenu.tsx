@@ -1,14 +1,14 @@
 import React from 'react';
-import { Box, useColorModeValue, Icon, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
+import { Box, useColorModeValue, Icon, useMediaQuery, Menu, MenuButton, MenuList, MenuItem, Button, Flex } from '@chakra-ui/react';
 import { FaHome, FaTruck, FaDollarSign, FaQuestionCircle, FaBars, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { HamburgerIcon } from '@chakra-ui/icons';
+
 
 const NavItem: React.FC<{ to: string; icon: any; children: React.ReactNode }> = ({ to, icon, children }) => {
   const itemBg = useColorModeValue('white', 'gray.600');
   const itemColor = useColorModeValue('black', 'white');
-
   
-
   return (
     <Box as={Link} to={to} display="flex" alignItems="center" p={2} my={2} bg={itemBg} color={itemColor} rounded="md" shadow="md">
       <Icon as={icon} mr={2} />
@@ -35,7 +35,11 @@ const NavMenu: React.FC = () => {
     <Box>
       {isMobile ? (
         <Menu>
-          <MenuButton as={Button} rightIcon={<FaBars />} />
+          <MenuButton as={Button} 
+          rightIcon={<HamburgerIcon />}
+          variant="ghost"
+          size='sm'
+          />
           <MenuList>
             <MenuItem as={Link} to="/">
               <Icon as={FaHome} mr={2} />
@@ -62,6 +66,7 @@ const NavMenu: React.FC = () => {
 
       ) : (
         menuItems
+
       )}
     </Box>
   );
