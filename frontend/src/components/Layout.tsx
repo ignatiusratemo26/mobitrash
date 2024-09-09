@@ -6,7 +6,7 @@ import NavMenu from './NavMenu';
 
 const Layout: React.FC = () => {
   const navBg = useColorModeValue('gray.200', 'gray.700');
-  const navBg1 = useColorModeValue("linear(to-l, #E4F3E3, #5CA9E9 )", "linear(to-l,#39304A, #5CA9E9)");
+  const navBg1 = useColorModeValue("linear(to-l, #E4F3E3, #5CA9E9 )", "linear(to-l,#39304A, #2a9ebb)");
   
   const navBgImage = "../assets/images/navBg.jpg";
   const mainBg = useColorModeValue('gray.50', 'gray.800');
