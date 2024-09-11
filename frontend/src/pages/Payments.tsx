@@ -6,12 +6,15 @@ import { useColorModeValue,
   Input,
   Divider,
   useDisclosure,
-  Collapse
+  Collapse,
+  FormControl,
+  FormLabel
 } from '@chakra-ui/react'
 
 import React from 'react'
 import { FaAddressBook, FaDollarSign, FaDownload, FaEnvelope, FaMoneyBill, FaPhone, FaSignOutAlt } from 'react-icons/fa'
 import PaymentsTable from '../components/PaymentsTable';
+
 
 const Payments = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
@@ -107,19 +110,23 @@ const Payments = () => {
             mt={4}
             >
               <GridItem mr={5} >
+              <FormControl isRequired >
                 <Flex direction='row' justify='space-between' >
-                    
-                  <Text m={2} fontSize={ isMobile ? 'sm' : 'md'}>Phone Number</Text>
+                  
+                  <FormLabel m={2} fontSize={ isMobile ? 'sm' : 'md'}>Phone Number</FormLabel>
                   <Input size={ isMobile ? 'xs' : 'sm'  }
                   variant='flushed' 
                   mr={2}
                   width="auto"
                   maxWidth="150px" 
                   flexShrink={1}  
+                  placeholder='07...'
                   />
+                  
+                  
                 </Flex>
                 <Flex direction='row' justify='space-between' >
-                  <Text m={2} fontSize={ isMobile ? 'sm' : 'md'}>Enter Amount</Text>
+                  <FormLabel m={2} fontSize={ isMobile ? 'sm' : 'md'}>Enter Amount</FormLabel>
                   <Input size={ isMobile ? 'xs' : 'sm' } variant='flushed' placeholder='Amount in Ksh. '
                   mr={2}    
                   width="auto"
@@ -145,6 +152,7 @@ const Payments = () => {
                   Submit
                 </Button>
 
+                </FormControl>
               </GridItem>
 
 
