@@ -57,31 +57,14 @@ const AnalyticsCard: React.FC<AnalyticsCardProps> = ({ title }) => {
 
         <StatGroup mt={4}>
           <Stat>
-            <StatLabel>Total Expenses</StatLabel>
+            <StatLabel>Total Cost for requests</StatLabel>
             <StatNumber>
-              {expenses.reduce((acc, curr) => acc + curr.amount, 0)}
+              Ksh. {expenses.reduce((acc, curr) => acc + curr.amount, 0)}
             </StatNumber>
           </Stat>
         </StatGroup>
 
-        {/* Input for adding new expenses */}
-        <Text fontSize="md" mt={4} mb={2}>Add New Expense</Text>
-        <Input
-          placeholder="Date (YYYY-MM)"
-          value={newExpense.date}
-          onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
-          mb={2}
-        />
-        <Input
-          placeholder="Amount"
-          type="number"
-          value={newExpense.amount}
-          onChange={(e) => setNewExpense({ ...newExpense, amount: Number(e.target.value) })}
-          mb={2}
-        />
-        <Button colorScheme="teal" onClick={handleAddExpense}>
-          Add Expense
-        </Button>
+      
       </CardBody>
     </Card>
   );
